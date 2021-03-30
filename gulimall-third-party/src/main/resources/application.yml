@@ -9,6 +9,10 @@ spring:
       oss:
         endpoint: oss-cn-beijing.aliyuncs.com
         bucket: gulimall-gzq
+      sms:
+        host: https://cdcxdxjk.market.alicloudapi.com
+        path: /chuangxin/dxjk
+        appcode: c170383ca3dd4fb88d229014102e1d1b
   application:
     name: gulimall-third-party
 server:
