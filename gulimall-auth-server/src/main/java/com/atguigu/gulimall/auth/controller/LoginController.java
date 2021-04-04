@@ -4,6 +4,7 @@ import com.alibaba.fastjson.TypeReference;
 import com.atguigu.common.constant.AuthServerConstant;
 import com.atguigu.common.exception.BizCodeEnume;
 import com.atguigu.common.utils.R;
+import com.atguigu.common.vo.MemberRespVo;
 import com.atguigu.gulimall.auth.feign.MemberFeignService;
 import com.atguigu.gulimall.auth.feign.ThirdPartFeignService;
 import com.atguigu.gulimall.auth.vo.UserLoginVo;
@@ -45,6 +46,17 @@ public class LoginController {
 
     @Autowired
     MemberFeignService memberFeignService;
+
+    @GetMapping("/login.html")
+    public String loginPage(HttpSession session){
+        Object attribute = session.getAttribute(AuthServerConstant.LOGIN_USER);
+        if (attribute==null){
+
+            return "login";
+        }else {
+            return "redirect:http://gulimall.com";
+        }
+    }
 
     //    @GetMapping("/login.html")
 //    public String loginPage(){
@@ -129,9 +141,12 @@ public class LoginController {
 
     }
     @PostMapping("/login")
-    public String login(UserLoginVo vo,RedirectAttributes redirectAttributes){
+    public String login(UserLoginVo vo,RedirectAttributes redirectAttributes,HttpSession session){
         R r = memberFeignService.login(vo);
         if(r.getCode()==0){
+            MemberRespVo data = r.getData("data", new TypeReference<MemberRespVo>() {
+            });
+            session.setAttribute(AuthServerConstant.LOGIN_USER,data);
             return "redirect:http://gulimall.com";
         }else {
             Map<String,String> errors = new HashMap<>();
