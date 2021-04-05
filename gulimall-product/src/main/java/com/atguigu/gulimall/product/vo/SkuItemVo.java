@@ -28,6 +28,8 @@ public class SkuItemVo {
 
     List<SpuItemAttrGroupVo> groupAttrs;
 
+    SeckillInfoVo seckillInfoVo;//当前商品的秒杀优惠信息
+
 
 
 
