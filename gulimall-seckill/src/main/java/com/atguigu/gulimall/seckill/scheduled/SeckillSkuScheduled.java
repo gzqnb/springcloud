@@ -28,7 +28,7 @@ public class SeckillSkuScheduled {
 
     private final String upload_lock = "seckill:upload:lock";
 
-    @Scheduled(cron = "*/3 * * * * ?")
+    @Scheduled(cron = "* 1 * * * ?")
     public void uploadSeckillSkuLatest3Days() {
         log.info("上交秒杀商品信息...");
         RLock lock = redissonClient.getLock(upload_lock);

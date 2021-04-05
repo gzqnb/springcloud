@@ -2,6 +2,7 @@ package com.atguigu.gulimall.order.config;
 
 import com.mysql.cj.x.protobuf.MysqlxCrud;
 import org.springframework.amqp.core.Message;
+import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
@@ -9,6 +10,7 @@ import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 
 import javax.annotation.PostConstruct;
 
@@ -19,14 +21,29 @@ import javax.annotation.PostConstruct;
  */
 @Configuration
 public class MyRabbitConfig {
-    @Autowired
+//    @Autowired
     RabbitTemplate rabbitTemplate;
+    //引入actutor会报循环依赖
+//    public MyRabbitConfig(RabbitTemplate rabbitTemplate){
+//        this.rabbitTemplate = rabbitTemplate;
+//        initRabbitTemplate();
+//    }
+    @Primary
+    @Bean
+    public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory){
+        RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
+        this.rabbitTemplate = rabbitTemplate;
+        rabbitTemplate.setMessageConverter(messageConverter());
+        initRabbitTemplate();
+        return rabbitTemplate;
+    }
+
     @Bean
     public MessageConverter messageConverter(){
         return new Jackson2JsonMessageConverter();
     }
 
-    @PostConstruct
+//    @PostConstruct
     public void initRabbitTemplate(){
         rabbitTemplate.setConfirmCallback(new RabbitTemplate.ConfirmCallback() {
             @Override

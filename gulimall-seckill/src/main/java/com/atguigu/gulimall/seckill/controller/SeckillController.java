@@ -1,8 +1,10 @@
 package com.atguigu.gulimall.seckill.controller;
 
+import ch.qos.logback.classic.Logger;
 import com.atguigu.common.utils.R;
 import com.atguigu.gulimall.seckill.service.SeckillService;
 import com.atguigu.gulimall.seckill.to.SecKillSkuRedisTo;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +19,7 @@ import java.util.List;
  * @Description: com.atguigu.gulimall.seckill.controller
  */
 @Controller
+@Slf4j
 public class SeckillController {
 
     @Autowired
@@ -25,6 +28,8 @@ public class SeckillController {
     @ResponseBody
     @GetMapping("/getCurrentSeckillSkus")
     public R getCurrentSeckillSkus() {
+
+        log.info("getCurrentSeckillSkus正在执行。。。");
 
         List<SecKillSkuRedisTo> vos = seckillService.getCurrentSeckillSkus();
         return R.ok().setData(vos);
