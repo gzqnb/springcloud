@@ -4,15 +4,15 @@ spring:
       discovery:
         server-addr: 127.0.0.1:8848
     alicloud:
-      access-key: LTAI5t7XicXPfHBDCE4SRfkA
-      secret-key: YgkjF9dsXViwG1SHgl9yRJOesP23Cl
+      access-key: xxx
+      secret-key: xxx
       oss:
         endpoint: oss-cn-beijing.aliyuncs.com
         bucket: gulimall-gzq
       sms:
-        host: https://cdcxdxjk.market.alicloudapi.com
-        path: /chuangxin/dxjk
-        appcode: c170383ca3dd4fb88d229014102e1d1b
+        host: xxx
+        path: xxx
+        appcode: xxx
   application:
     name: gulimall-third-party
 server:
